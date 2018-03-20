@@ -8,7 +8,7 @@ Celem warsztatów niekoniecznie jest ukończenie całego zadania, ale zdobycie d
 
 Waszym zadaniem jest napisanie kodu dla komponentu prostego aparatu cyfrowego. Aparat ma dwa zewnętrzne przyciski: przycisk zasilania i przycisk migawki.
 
-Głównym komponent Camera jest odpowiedzialny za reagowanie na działania użytkownika na przełączniki aparatu i koordynowanie transferu danych z sensora do karty pamięci, kiedy jest robione zdjęcie. Powinieneś zaimplementować klasę Camera w stylu TDD dodając pojedynczo testy w JUnit do wymaganych zachowań.
+Głównym komponent Camera jest odpowiedzialny za reagowanie na działania użytkownika na przełączniki aparatu i koordynowanie transferu danych z sensora do karty pamięci, kiedy jest robione zdjęcie. Powinieneś zaimplementować klasę Camera w stylu TDD dodając pojedynczo testy w JUnit do wymaganych zachowań. Warunki sprawdzaj korzystając z bilioteki AssertJ
 
 **Klasa Camera**
 
