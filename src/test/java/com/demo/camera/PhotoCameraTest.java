@@ -5,9 +5,8 @@ import org.junit.Test;
 
 public class PhotoCameraTest {
 
-
     @Test
-    public void changeName() {
+    public void changeMe() {
         Assertions.assertThat(this).isNotNull();
     }
 

@@ -16,7 +16,10 @@ Głównym komponent Camera jest odpowiedzialny za reagowanie na działania użyt
 1. Włączenie kamery włącza zasilanie sensora.
 2. Wyłączenie kamery odcina zasilanie sensora.
 3. Naciśnięcie migawki jeśli zasilanie jest odcięte nie robi nic.
-4. Naciśnięcie migawki z włączonym zasilaniem, kopiuje dane z sensora do karty pamięci. Zapisywanie danych do karty pamięci może zająć kilka sekund.
+4. Naciśnięcie migawki z włączonym zasilaniem, kopiuje dane z sensora do karty pamięci. 
+
+Zapisywanie danych do karty pamięci zajmuje nieco czasu.
+
 5. Jeśli dane są obecnie zapisywane, wyłączenie kamery nie odcina zasilania sensora
 6. Kiedy zapis danych się zakończy, aparat odcina zasilanie sensora.
 
