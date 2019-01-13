@@ -113,7 +113,7 @@ public class PhotoCameraTest {
         Assert.assertFalse(isWriteCompleted);
     }
     @Test
-    public void PowerOffCameraDoesNotPowerOffSensorWhileWriteToCardIsCompleted(){
+    public void PowerOffCameraDoesPowerOffSensorWhileWriteToCardIsCompleted(){
         ImageSensor sensor = mock(ImageSensor.class);
         Card card = mock(Card.class);
         PhotoCamera camera = new PhotoCamera(sensor, card);
@@ -127,4 +127,19 @@ public class PhotoCameraTest {
         Assert.assertTrue(isWriteCompleted);
     }
 
+
+    @Test
+    public void WhenPowerOffWasPressedAndWriteToCardIsCompletedCameraPowersOffSensor(){
+        ImageSensor sensor = mock(ImageSensor.class);
+        Card card = mock(Card.class);
+        PhotoCamera camera = new PhotoCamera(sensor, card);
+        camera.turnOn();
+        byte[] data = "data".getBytes();
+        Mockito.when(sensor.read()).thenReturn(data);
+        camera.pressButton();
+        camera.turnOff();
+        camera.writeCompleted();
+        boolean isWriteCompleted = camera.isWriteCompleted;
+        Assert.assertTrue(isWriteCompleted);
+    }
 }

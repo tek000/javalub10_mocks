@@ -25,6 +25,10 @@ public class PhotoCamera implements WriteListener {
             imageSensor.turnOff();
             cameraPowerStatus = false;
 
+        } else {
+
+            cameraPowerStatus = false;
+
         }
 
     }
@@ -42,6 +46,9 @@ public class PhotoCamera implements WriteListener {
     @Override
     public void writeCompleted() {
         isWriteCompleted = true;
+        if (!cameraPowerStatus){
+         turnOff();
+        }
     }
 }
 
