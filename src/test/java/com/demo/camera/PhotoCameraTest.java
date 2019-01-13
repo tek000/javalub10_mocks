@@ -30,18 +30,21 @@ public class PhotoCameraTest {
 
     @Test
     public void  IsCameraTurnedOffAfterCreation(){
+        ImageSensor sensor = mock(ImageSensor.class);
+        PhotoCamera camera = new PhotoCamera(sensor);
 
-        PhotoCamera camera = new PhotoCamera();
-        boolean isTurnedOn = camera.getPowerStatus();
+        boolean isTurnedOn = camera.getCameraPowerStatus();
 
         Assert.assertFalse(isTurnedOn);
 
     }
     @Test
     public void TurningOnCameraIsTurningOnSensor() {
-        PhotoCamera camera = new PhotoCamera();
-        camera.turnOn();
+
+
         ImageSensor sensor = mock(ImageSensor.class);
+        PhotoCamera camera = new PhotoCamera(sensor);
+        camera.turnOn();
         Mockito.verify(sensor).turnOn();
 
     }

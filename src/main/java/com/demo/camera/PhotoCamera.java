@@ -3,40 +3,17 @@ package com.demo.camera;
 public class PhotoCamera implements ImageSensor{
 
 
-    boolean powerStatus;
+    boolean cameraPowerStatus;
+    ImageSensor imageSensor;
 
-//    private int size;
-//
-//    private double quality;
-//
-//    public PhotoCamera setQuality(double quality) {
-//        this.quality = quality;
-//        return this;
-//    }
-//
-//    public PhotoCamera setSize(int size) {
-//        this.size = size;
-//        return this;
-//    }
-
-//    public static PhotoCamera main(String[] args) {
-//            return new PhotoCamera()
-//                .setQuality(2.0)
-//                .setSize(4);
-//    }
-
-//    public static PhotoCamera main(String[] args) {
-//        return new PhotoCamera();
-//
-//    }
-
-
-    public PhotoCamera() {
-        this.powerStatus = false;
+    public PhotoCamera(ImageSensor imageSensor) {
+        this.cameraPowerStatus = false;
+        this.imageSensor = imageSensor;
     }
 
     public void turnOn() {
-        // not implemented
+       cameraPowerStatus = true;
+       imageSensor.turnOn();
     }
 
     public void turnOff() {
@@ -52,8 +29,8 @@ public class PhotoCamera implements ImageSensor{
         // not implemented
     }
 
-    public boolean getPowerStatus() {
-        return powerStatus;
+    public boolean getCameraPowerStatus() {
+        return cameraPowerStatus;
     }
 
 
