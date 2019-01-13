@@ -3,6 +3,7 @@ package com.demo.camera;
 public class PhotoCamera implements WriteListener {
 
     boolean cameraPowerStatus;
+    boolean isWriteCompleted = false;
     ImageSensor imageSensor;
     Card card;
 
@@ -19,8 +20,12 @@ public class PhotoCamera implements WriteListener {
     }
 
     public void turnOff() {
-        writeCompleted();
-        cameraPowerStatus = false;
+        if (isWriteCompleted) {
+
+            imageSensor.turnOff();
+            cameraPowerStatus = false;
+
+        }
 
     }
 
@@ -36,9 +41,7 @@ public class PhotoCamera implements WriteListener {
 
     @Override
     public void writeCompleted() {
-
-        imageSensor.turnOff();
-
+        isWriteCompleted = true;
     }
 }
 
