@@ -1,43 +1,44 @@
 package com.demo.camera;
 
-public class PhotoCamera implements ImageSensor{
-
+public class PhotoCamera implements WriteListener {
 
     boolean cameraPowerStatus;
     ImageSensor imageSensor;
+    Card card;
 
-    public PhotoCamera(ImageSensor imageSensor) {
+
+    public PhotoCamera(ImageSensor imageSensor, Card card) {
         this.cameraPowerStatus = false;
         this.imageSensor = imageSensor;
+        this.card = card;
     }
 
     public void turnOn() {
-       cameraPowerStatus = true;
-       imageSensor.turnOn();
+        cameraPowerStatus = true;
+        imageSensor.turnOn();
     }
 
     public void turnOff() {
+        writeCompleted();
         cameraPowerStatus = false;
-        imageSensor.turnOff();
+
     }
 
-    @Override
-    public byte[] read() {
-        return new byte[0];
-    }
-
-    public boolean pressButton() {
-        if (!this.cameraPowerStatus ){
-            return false;
-        }else return true;
-
+    public void pressButton() {
+        if (this.cameraPowerStatus) {
+            card.write(imageSensor.read());
+        }
     }
 
     public boolean getCameraPowerStatus() {
         return cameraPowerStatus;
     }
 
+    @Override
+    public void writeCompleted() {
 
+        imageSensor.turnOff();
 
+    }
 }
 

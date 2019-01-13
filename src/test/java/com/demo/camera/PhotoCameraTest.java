@@ -5,8 +5,10 @@ import java.util.Arrays;
 import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
 public class PhotoCameraTest {
@@ -14,36 +16,41 @@ public class PhotoCameraTest {
     @Test
     public void changeMe() {
         Assertions
-            .assertThat(Arrays.asList(2, 3))
-            .isNotNull()
-            .contains(3)
-            .doesNotContain(5)
+                .assertThat(Arrays.asList(2, 3))
+                .isNotNull()
+                .contains(3)
+                .doesNotContain(5)
 
         ;
 
         Assertions
-            .assertThat(this)
-            .isNotNull();
+                .assertThat(this)
+                .isNotNull();
 
     }
 
 
     @Test
-    public void  IsCameraTurnedOffAfterCreation(){
+    public void IsCameraTurnedOffAfterCreation() {
         ImageSensor sensor = mock(ImageSensor.class);
-        PhotoCamera camera = new PhotoCamera(sensor);
+        Card card = mock(Card.class);
+
+        PhotoCamera camera = new PhotoCamera(sensor, card);
 
         boolean isTurnedOn = camera.getCameraPowerStatus();
 
         Assert.assertFalse(isTurnedOn);
 
     }
+
     @Test
     public void TurningOnCameraIsTurningOnSensor() {
 
 
         ImageSensor sensor = mock(ImageSensor.class);
-        PhotoCamera camera = new PhotoCamera(sensor);
+        Card card = mock(Card.class);
+
+        PhotoCamera camera = new PhotoCamera(sensor, card);
         camera.turnOn();
         Mockito.verify(sensor).turnOn();
 
@@ -55,7 +62,9 @@ public class PhotoCameraTest {
 
 
         ImageSensor sensor = mock(ImageSensor.class);
-        PhotoCamera camera = new PhotoCamera(sensor);
+        Card card = mock(Card.class);
+
+        PhotoCamera camera = new PhotoCamera(sensor, card);
         camera.turnOn();
         camera.turnOff();
         Mockito.verify(sensor).turnOff();
@@ -63,28 +72,46 @@ public class PhotoCameraTest {
     }
 
     @Test
-    public void pressButtonOnCameraDuringPowerOffDoesNothing() {
-
+    public void pressButtonOnCameraDuringPowerOffDoesNoInteractionWithSensor() {
 
         ImageSensor sensor = mock(ImageSensor.class);
-        PhotoCamera camera = new PhotoCamera(sensor);
+        Card card = mock(Card.class);
 
-        boolean isCameraDoingSthDuringPressButton = camera.pressButton();
-        Assert.assertFalse(isCameraDoingSthDuringPressButton);
-
+        PhotoCamera camera = new PhotoCamera(sensor, card);
+        camera.pressButton();
+        Mockito.verifyZeroInteractions(sensor);
     }
-
 
     @Test
-    public void pressButtonOnCameraDuringPowerOnDoesSth() {
-
+    public void pressButtonOnWhileCameraIsOnCopyDataFromSensorToMemCard() {
 
         ImageSensor sensor = mock(ImageSensor.class);
-        PhotoCamera camera = new PhotoCamera(sensor);
+        Card card = mock(Card.class);
+
+        PhotoCamera camera = new PhotoCamera(sensor, card);
         camera.turnOn();
 
-        boolean isCameraDoingSthDuringPressButton = camera.pressButton();
-        Assert.assertTrue(isCameraDoingSthDuringPressButton);
+        byte[] data = "data".getBytes();
+
+        Mockito.when(sensor.read()).thenReturn(data);
+        camera.pressButton();
+        Mockito.verify(card).write(data);
 
     }
+
+    @Test
+    public void PowerOffCameraDoesNotPowerOffSensorWhileWriteToCardIsNotCompleted(){
+        ImageSensor sensor = mock(ImageSensor.class);
+        Card card = mock(Card.class);
+        PhotoCamera camera = new PhotoCamera(sensor, card);
+        camera.turnOn();
+        byte[] data = "data".getBytes();
+        Mockito.when(sensor.read()).thenReturn(data);
+        camera.pressButton();
+        camera.turnOff();
+        Mockito.verify(card).write(data);
+
+    }
+
+
 }
