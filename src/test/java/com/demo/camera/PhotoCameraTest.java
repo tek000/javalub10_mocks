@@ -61,4 +61,30 @@ public class PhotoCameraTest {
         Mockito.verify(sensor).turnOff();
 
     }
+
+    @Test
+    public void pressButtonOnCameraDuringPowerOffDoesNothing() {
+
+
+        ImageSensor sensor = mock(ImageSensor.class);
+        PhotoCamera camera = new PhotoCamera(sensor);
+
+        boolean isCameraDoingSthDuringPressButton = camera.pressButton();
+        Assert.assertFalse(isCameraDoingSthDuringPressButton);
+
+    }
+
+
+    @Test
+    public void pressButtonOnCameraDuringPowerOnDoesSth() {
+
+
+        ImageSensor sensor = mock(ImageSensor.class);
+        PhotoCamera camera = new PhotoCamera(sensor);
+        camera.turnOn();
+
+        boolean isCameraDoingSthDuringPressButton = camera.pressButton();
+        Assert.assertTrue(isCameraDoingSthDuringPressButton);
+
+    }
 }

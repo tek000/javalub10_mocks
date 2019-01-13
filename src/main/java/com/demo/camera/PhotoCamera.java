@@ -26,8 +26,11 @@ public class PhotoCamera implements ImageSensor{
         return new byte[0];
     }
 
-    public void pressButton() {
-        // not implemented
+    public boolean pressButton() {
+        if (!this.cameraPowerStatus ){
+            return false;
+        }else return true;
+
     }
 
     public boolean getCameraPowerStatus() {
