@@ -48,4 +48,17 @@ public class PhotoCameraTest {
         Mockito.verify(sensor).turnOn();
 
     }
+
+
+    @Test
+    public void TurningOffCameraIsTurningSensorOff() {
+
+
+        ImageSensor sensor = mock(ImageSensor.class);
+        PhotoCamera camera = new PhotoCamera(sensor);
+        camera.turnOn();
+        camera.turnOff();
+        Mockito.verify(sensor).turnOff();
+
+    }
 }

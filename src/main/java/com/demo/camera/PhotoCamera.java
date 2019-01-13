@@ -17,7 +17,8 @@ public class PhotoCamera implements ImageSensor{
     }
 
     public void turnOff() {
-        // not implemented
+        cameraPowerStatus = false;
+        imageSensor.turnOff();
     }
 
     @Override
